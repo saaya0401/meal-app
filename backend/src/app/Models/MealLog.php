@@ -10,10 +10,20 @@ class MealLog extends Model
     protected $fillable = [
         'profile_id',
         'date',
+        'time',
         'menu',
         'amount_percent',
         'meal_time',
         'meal_time_note',
         'memo'
     ];
+
+    protected $casts = [
+        'menu'=>'array',
+        'time'=>'datetime:H:i'
+    ];
+
+    public function profile() {
+        return $this->belongsTo(Profile::class);
+    }
 }

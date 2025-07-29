@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('image')->nullable();
             $table->enum('gender', ['male', 'female']);
             $table->date('birthdate');
-            $table->integer('weight_kg');
+            $table->decimal('weight_kg', 3,1);
             $table->string('breed');
             $table->text('personality');
             $table->boolean('is_multiple_dogs');
