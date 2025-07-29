@@ -19,4 +19,10 @@ class Profile extends Model
         'is_multiple_dogs',
         'companion_name'
     ];
+
+    public function getIsMultipleDogsLabelAttribute(){
+        return $this->is_multiple_dogs ? '多頭飼い' : '単頭飼い';
+    }
+
+    protected $appends = ['is_multiple_dogs_label'];
 }

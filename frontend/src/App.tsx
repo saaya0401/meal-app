@@ -1,25 +1,14 @@
-import { useEffect, useState } from 'react';
+import { Button } from "@chakra-ui/react";
+import { Provider } from "./components/ui/provider";
+import { BrowserRouter } from "react-router-dom";
+import { Router } from "./router/Router";
 
-function App() {
-  const [message, setMessage] = useState('loading...');
-
-  useEffect(() => {
-    console.log(process.env.REACT_APP_API_URL)
-    fetch(`${process.env.REACT_APP_API_URL}/ping`)
-      .then((res) => res.json())
-      .then((data) => setMessage(data.message))
-      .catch((err) => {
-        console.error(err);
-        setMessage('error');
-      });
-  }, []);
-
+export default function App() {
   return (
-    <div>
-      <h1>API Response:</h1>
-      <p>{message}</p>
-    </div>
-  );
+    <Provider>
+      <BrowserRouter>
+        <Router />
+      </BrowserRouter>
+    </Provider>
+  )
 }
-
-export default App;
