@@ -1,8 +1,8 @@
 import { Drawer, Flex } from "@chakra-ui/react";
 import { FC, memo } from "react";
 import { MenuIconButton } from "../atoms/button/MenuIconButton";
-import { GoHome, GoNote } from "react-icons/go";
-import { Button } from "../ui/MenuButton";
+import { GoHome, GoNote, GoPencil } from "react-icons/go";
+import { Button } from "../ui/Button";
 
 type Props = {
     onClickHome: () => void;
@@ -33,6 +33,14 @@ export const MenuDrawer: FC<Props> = memo((props) => {
                                 <Flex align="center" justify="center" gap={2}>
                                     <GoNote />
                                     記録一覧
+                                </Flex>
+                            </Button>
+                        </Drawer.CloseTrigger>
+                        <Drawer.CloseTrigger asChild>
+                            <Button visual="menuItem" position="static">
+                                <Flex align="center" justify="center" gap={2}>
+                                    <GoPencil />
+                                    記録を追加
                                 </Flex>
                             </Button>
                         </Drawer.CloseTrigger>

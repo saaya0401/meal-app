@@ -15,6 +15,15 @@ export const buttonRecipe = defineRecipe({
                 _hover: {
                     bg: "gray.200",
                 }
+            },
+            navButton: {
+                p: 3,
+                color: "white",
+                fontSize: 18,
+                fontWeight: "bold",
+                textDecoration: "none",
+                _hover: { opacity: 0.8 },
+                borderRadius: 10
             }
         }
     },
