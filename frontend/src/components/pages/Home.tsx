@@ -1,5 +1,23 @@
-import { FC, memo } from "react";
+import { Box, Flex, Grid, Heading, Image, Table, Text } from "@chakra-ui/react";
+import { FC, memo, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
+import { PetProfile } from "../organisms/home/PetProfile";
+import { LatestMeal } from "../organisms/home/LatestMeal";
+import { Advice } from "../organisms/home/Advice";
 
 export const Home: FC = memo(() => {
-    return <p>ホーム画面です</p>
+    const navigate = useNavigate();
+    const onClick = useCallback(() => navigate("/home"), [navigate]);
+
+    return (
+        <>
+            <PetProfile />
+            <Box  mx={{ base: 2, md: 50 }} my={{base:12, md: 59, lg: 100}}>
+                <Grid templateColumns={{ base: "1fr", lg: "1fr 1fr" }} >
+                    <LatestMeal onClick={ onClick } />
+                    <Advice />
+                </Grid>
+            </Box>
+        </>
+    )
 })
