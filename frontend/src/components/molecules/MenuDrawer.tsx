@@ -36,14 +36,6 @@ export const MenuDrawer: FC<Props> = memo((props) => {
                                 </Flex>
                             </Button>
                         </Drawer.CloseTrigger>
-                        <Drawer.CloseTrigger asChild>
-                            <Button visual="menuItem" position="static">
-                                <Flex align="center" justify="center" gap={2}>
-                                    <GoPencil />
-                                    記録を追加
-                                </Flex>
-                            </Button>
-                        </Drawer.CloseTrigger>
                     </Drawer.Body>
                     <Drawer.Footer />
                 </Drawer.Content>

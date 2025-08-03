@@ -3,6 +3,7 @@ import { FC, memo, useCallback } from "react";
 import { MenuDrawer } from "../../molecules/MenuDrawer";
 import { useNavigate } from "react-router-dom";
 import { NavButton } from "../../atoms/button/NavButton";
+import { GoPencil } from "react-icons/go";
 
 export const Header: FC = memo(() => {
     const navigate = useNavigate();
@@ -11,9 +12,12 @@ export const Header: FC = memo(() => {
 
     return (
         <>
-            <Flex as="nav" bg="pink.200" color="gray.600" align="center" justify="space-between" py={{ base: 3, md: 3 }} px={{ base: 6, md: 6}}>
+            <Flex as="nav" bg="pink.200" color="gray.600" align="center" justify="space-between" py={{ base: 3, md: 5 }} pr={{ base: 3, md: 10 }} pl={{ base: 6, md: 10 }}>
+                <Flex display={{base: "flex", md: "none"}} align="center" justify="center"  _hover={{cursor: "pointer", opacity: 0.8}} bg="purple.400" color="white" borderRadius="full" padding={2}>
+                    <GoPencil size={ 20 } />
+                </Flex>
                 <Flex as="a" _hover={{cursor: "pointer"}} onClick={onClickHome}>
-                    <Heading as="h1" fontSize={{ base: 25, md: 35 }} fontFamily="'Mochiy Pop P One', 'sans-serif'">
+                    <Heading as="h1" fontSize={{ base: 25, md: 35 }} fontFamily="'Mochiy Pop P One', 'sans-serif'" >
                         ひよりのごはん日記
                     </Heading>
                 </Flex>
