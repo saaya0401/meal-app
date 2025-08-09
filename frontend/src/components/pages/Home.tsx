@@ -1,4 +1,4 @@
-import { Box, Flex, Grid, Heading, Image, Table, Text } from "@chakra-ui/react";
+import { Box, Grid } from "@chakra-ui/react";
 import { FC, memo, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { PetProfile } from "../organisms/home/PetProfile";

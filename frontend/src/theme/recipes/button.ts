@@ -14,6 +14,7 @@ export const buttonRecipe = defineRecipe({
                 fontSize: 20,
                 _hover: {
                     bg: "gray.200",
+                    cursor: "pointer"
                 }
             },
             navButton: {
@@ -22,7 +23,10 @@ export const buttonRecipe = defineRecipe({
                 fontSize: 18,
                 fontWeight: "bold",
                 textDecoration: "none",
-                _hover: { opacity: 0.8 },
+                _hover: {
+                    opacity: 0.8,
+                    cursor: "pointer"
+                },
                 borderRadius: 10
             }
         }
