@@ -13,7 +13,7 @@ export const FieldRow: FC<Props> = memo((props) => {
     return (
         <Field.Root required={isRequired}>
             <Flex align="center" gap={{base:4 , md: 10}}>
-                <Field.Label minW={{base: "90px" , md: "150px"}} fontSize={{base: "sm" , md: "xl"}}>{ label }</Field.Label>
+                <Field.Label fontWeight="bold" minW={{base: "90px" , md: "150px"}} fontSize={{base: "sm" , md: "xl"}}>{ label }</Field.Label>
                 {children}
             </Flex>
             <Field.ErrorText>{ errorText }</Field.ErrorText>
