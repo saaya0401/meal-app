@@ -14,7 +14,7 @@ export const PetProfile: FC = memo(() => {
                         <Text fontSize={{base: 20, md: 30, lg: 38 }} fontWeight="bold" textAlign={{base: "center", lg: "left"}}>ひより ちゃん</Text>
                     </Box>
                     <Box textAlign="center" maxW={ 200 }  fontSize={{base: "md", md: "xl" }}>
-                        <Text mb={{base: 1, lg: 3}} >2025/5/11生まれ</Text>
+                        <Text mb={{base: 1, lg: 3}} >2024/5/11生まれ</Text>
                         <Flex align="center" justify="left" gap={10} flexWrap="wrap">
                             <IoMdFemale color="red" size={26} />
                             <Text>2.1kg</Text>

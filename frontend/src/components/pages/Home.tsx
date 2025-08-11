@@ -2,7 +2,7 @@ import { Box, Grid } from "@chakra-ui/react";
 import { FC, memo, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { PetProfile } from "../organisms/home/PetProfile";
-import { LatestMeal } from "../organisms/home/LatestMeal";
+import { LatestMeal } from "../organisms/mealLog/LatestMeal";
 import { Advice } from "../organisms/home/Advice";
 
 export const Home: FC = memo(() => {

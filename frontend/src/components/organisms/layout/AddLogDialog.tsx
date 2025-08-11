@@ -1,46 +1,40 @@
 import { Dialog, Flex, Input, Portal, Textarea, VStack } from "@chakra-ui/react";
-import { FC, memo, ReactNode, useRef, useState } from "react";
+import { FC, memo, ReactNode, useCallback, useRef, useState } from "react";
 import { NavButton } from "../../atoms/button/NavButton";
 import { FieldRow } from "../../molecules/InputFields/FieldRow";
 import { SelectField } from "../../molecules/InputFields/SelectField";
 import { MenuListInputs } from "../../molecules/InputFields/MenuListInputs";
 import { HandleChange, MenuItem } from "../../../types/form";
 import { SliderField } from "../../molecules/InputFields/SliderField";
+import { useMenus } from "../../../hooks/useMenus";
+import { useDatePicker } from "../../../hooks/useDatePicker";
+import { FieldGroup } from "../mealLog/FieldGroup";
 
 type Props = {
     triggerDesktop?: ReactNode;
     triggerMobile?: ReactNode;
     selectedMealTime: string | null;
     setSelectedMealTime: (v: string | null) => void;
-    menus: MenuItem[];
-    handleAdd: () => void;
-    handleChange: HandleChange;
     resetForm: () => void;
 }
 
 export const RecordDialog: FC<Props> = memo((props) => {
-    const { triggerMobile, triggerDesktop, selectedMealTime, setSelectedMealTime, menus, handleAdd, handleChange, resetForm } = props;
+    const { triggerMobile, triggerDesktop, selectedMealTime, setSelectedMealTime, resetForm } = props;
 
-    const inputRef = useRef<HTMLInputElement | null>(null);
-    const handleClick = () => {
-        if (inputRef.current) {
-            if ("showPicker" in inputRef.current) {
-                (inputRef.current as any).showPicker();
-            }
-        }
-    }
+    const { inputRef, showPicker } = useDatePicker();
+
     const mealTimeItems = [
-            { label: "朝ごはん", value: "morning" },
-            { label: "昼ごはん", value: "noon" },
-            { label: "夜ごはん", value: "evening" },
-            { label: "その他", value: "other" },
+                { label: "朝ごはん", value: "morning" },
+                { label: "昼ごはん", value: "noon" },
+                { label: "夜ごはん", value: "evening" },
+                { label: "その他", value: "other" },
     ];
 
     const [rate, setRate] = useState(5);
-    const handleReset = () => {
+    const handleReset = useCallback(() => {
         resetForm();
         setRate(5);
-    }
+    }, [resetForm, setRate]);
 
     return (
         <Dialog.Root placement="center" size={{base:"sm" , md: "xl"}} >
@@ -50,10 +44,10 @@ export const RecordDialog: FC<Props> = memo((props) => {
                 <Dialog.Backdrop />
                 <Dialog.Positioner>
                     <Dialog.Content p={{ base: 4, md: 6}}>
-                        <Dialog.Body p={{base: 1, md: 5}}>
+                        <Dialog.Body p={{ base: 1, md: 5 }}>
                             <VStack gap={{base:6, md: 16}}>
                                 <FieldRow label="日付" isRequired={true} errorText="日付を選択してください" >
-                                    <Input ref={inputRef} w={{base: "170px", md: "280px"}}  type="date" fontSize={{base: "sm" , md: "xl"}} onClick={handleClick} cursor="pointer"/>
+                                    <Input ref={inputRef} w={{base: "170px", md: "280px"}}  type="date" fontSize={{base: "sm" , md: "xl"}} onClick={showPicker} cursor="pointer"/>
                                 </FieldRow>
                                 <FieldRow label="食事の時間帯" isRequired={true} errorText="時間帯を選択してください">
                                     <SelectField items={mealTimeItems} value={selectedMealTime} onChange={setSelectedMealTime} />
@@ -61,16 +55,7 @@ export const RecordDialog: FC<Props> = memo((props) => {
                                         <Input w={{base: "120px", md: "200px"}} fontSize={{base: "sm" , md: "lg"}} placeholder="詳細"/>
                                     )}
                                 </FieldRow>
-                                <FieldRow label="メニュー" isRequired={true} errorText="メニューを入力してください">
-                                    <MenuListInputs menus={menus} onAdd={handleAdd} onChange={handleChange} />
-                                </FieldRow>
-                                <FieldRow label="完食率" isRequired={true}>
-                                    <SliderField rate={rate} setRate={setRate} />
-                                </FieldRow>
-                                <FieldRow label="フリーコメント">
-                                    <Textarea minH="80px" w={{ base: "220px", md: "500px" }} fontSize={{ base: "sm", md: "xl" }} placeholder={`例：最初の一粒だけ手であげると食べ始めた。\n脱線を何度かしていたなど。`}>
-                                    </Textarea>
-                                </FieldRow>
+                                <FieldGroup rate={rate} setRate={setRate} />
                             </VStack>
                         </Dialog.Body>
                         <Dialog.Footer >
