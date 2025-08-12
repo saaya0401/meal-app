@@ -7,10 +7,10 @@ type Props = {
     onClick?: (() => void) | null;
     children: ReactNode;
     bg: string;
-    w?: ComponentProps<typeof Button>["py"];
-    px?: ComponentProps<typeof Button>["py"];
+    w?: ComponentProps<typeof Button>["w"];
+    px?: ComponentProps<typeof Button>["px"];
     py?: ComponentProps<typeof Button>["py"];
-    fontSize?: ComponentProps<typeof Button>["py"];
+    fontSize?: ComponentProps<typeof Button>["fontSize"];
 }
 
 export const NavButton: FC<Props> = memo((props) => {
