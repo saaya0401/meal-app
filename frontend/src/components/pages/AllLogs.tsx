@@ -1,10 +1,8 @@
-import { Box, VStack, Wrap, WrapItem } from "@chakra-ui/react";
+import { Box, Wrap, WrapItem } from "@chakra-ui/react";
 import { FC, memo, useCallback, useState } from "react";
 import { useAllLogs } from "../../hooks/useAllLogs";
 import { MonthFilter } from "../molecules/MonthFilter";
 import { Loading } from "../molecules/Loading";
-import { MealLogCard } from "../organisms/mealLog/MealLogCard";
-import { DailyReflection } from "../molecules/DailyReflection";
 import { MealLogDialog } from "../organisms/layout/MealLogDialog";
 import { DailyMealCard } from "../organisms/mealLog/DailyMealCard";
 
@@ -26,16 +24,42 @@ export const AllLogs: FC = memo(() => {
                     <Wrap gap={{base: 3, md: 10}} justify="center" align="center">
                         <WrapItem>
                             <MealLogDialog
-                                title="食事履歴"
-                                trigger={<DailyMealCard percent={80} date="2025/08/11(月)" />}
-                                body={
-                                    <VStack gap={{ base: 6, md: 6 }}>
-                                        <MealLogCard mealTime="朝ごはん" />
-                                        <MealLogCard mealTime="昼ごはん" />
-                                    </VStack>
-                                }
-                                footer={<DailyReflection />}
                                 date="2025/08/11(月)"
+                                dailyLogTrigger={
+                                    <DailyMealCard percent={80} date="2025/08/11(月)" />
+                                }
+                            />
+                        </WrapItem>
+                        <WrapItem>
+                            <MealLogDialog
+                                date="2025/08/11(月)"
+                                dailyLogTrigger={
+                                    <DailyMealCard percent={80} date="2025/08/11(月)" />
+                                }
+                            />
+                        </WrapItem>
+                        <WrapItem>
+                            <MealLogDialog
+                                date="2025/08/11(月)"
+                                dailyLogTrigger={
+                                    <DailyMealCard percent={80} date="2025/08/11(月)" />
+                                }
+                            />
+                        </WrapItem>
+                        <WrapItem>
+                            <MealLogDialog
+                                date="2025/08/11(月)"
+                                dailyLogTrigger={
+                                    <DailyMealCard percent={80} date="2025/08/11(月)" />
+                                }
+                            />
+                        </WrapItem>
+                        <WrapItem>
+                            <MealLogDialog
+                                date="2025/08/11(月)"
+                                dailyLogTrigger={
+                                    <DailyMealCard percent={80} date="2025/08/11(月)" />
+                                }
                             />
                         </WrapItem>
                     </Wrap>
