@@ -6,17 +6,18 @@ type Props = {
     label: string;
     children: ReactNode;
     errorText?: string;
+    htmlFor?: string;
 }
 
 export const FieldRow: FC<Props> = memo((props) => {
-    const { isRequired, label, children, errorText} = props;
+    const { isRequired, htmlFor, label, children, errorText} = props;
     return (
-        <Field.Root required={isRequired}>
+        <Field.Root required={isRequired} invalid={!!errorText}>
             <Flex align="center" gap={{base:4 , md: 10}}>
-                <Field.Label fontWeight="bold" minW={{base: "90px" , md: "150px"}} fontSize={{base: "sm" , md: "xl"}}>{ label }</Field.Label>
+                <Field.Label htmlFor={htmlFor} fontWeight="bold" minW={{base: "90px" , md: "150px"}} fontSize={{base: "sm" , md: "xl"}}>{ label }</Field.Label>
                 {children}
             </Flex>
-            <Field.ErrorText>{ errorText }</Field.ErrorText>
+            <Field.ErrorText color="red.600" fontSize={{base: "md", md: "xl"}} pt={3}>{ errorText }</Field.ErrorText>
         </Field.Root>
     )
 })

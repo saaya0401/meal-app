@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->foreignId('profile_id')->constrained()->cascadeOnDelete();
             $table->date('date');
-            $table->time('time');
             $table->json('menu');
             $table->string('amount_percent');
             $table->enum('meal_time', ['morning', 'noon', 'evening', 'other']);

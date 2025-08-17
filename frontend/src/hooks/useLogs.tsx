@@ -1,9 +1,12 @@
 import { useCallback, useState } from "react";
 
-export const useLogs = (initial = [{name: "", amount: ""}]) => {
+export const useLogs = (initial = [{ name: "", amount: "" }]) => {
+    const [date, setDate] = useState("");
     const [menus, setMenus] = useState(initial);
     const [selectedMealTime, setSelectedMealTime] = useState<string | null>(null);
+    const [mealTimeNote, setMealTimeNote] = useState<string>("");
     const [rate, setRate] = useState(5);
+    const [memoText, setMemoText] = useState("");
 
     const menuAdd = useCallback(() => {
             setMenus(prev => [...prev, { name: "", amount: "" }]);
@@ -18,9 +21,12 @@ export const useLogs = (initial = [{name: "", amount: ""}]) => {
     }, []);
 
     const resetForm = useCallback(() => {
+        setDate("");
         setSelectedMealTime(null);
+        setMealTimeNote("");
         setMenus([{ name: "", amount: "" }]);
         setRate(5);
-    }, [setSelectedMealTime, setMenus]);
-    return {menus, setMenus,  menuAdd, menuChange, selectedMealTime, setSelectedMealTime, rate, setRate, resetForm }
+        setMemoText("");
+    }, []);
+    return {menus, setMenus,  menuAdd, menuChange, selectedMealTime, setSelectedMealTime, mealTimeNote, setMealTimeNote, rate, setRate, resetForm, memoText, setMemoText, date, setDate}
 }

@@ -2,14 +2,10 @@ import { createListCollection, Portal, Select } from "@chakra-ui/react";
 import { FC, memo } from "react";
 import { SelectOption } from "../../../types/form";
 import { useLogs } from "../../../hooks/useLogs";
+import { useLogsContext } from "../../../providers/LogsContext";
 
-type Props = {
-    selectedMealTime: string | null;
-    setSelectedMealTime: (v: string | null) => void;
-}
-
-export const SelectField: FC<Props> = memo((props) => {
-    const { selectedMealTime, setSelectedMealTime } = props;
+export const SelectField: FC = memo(() => {
+    const { selectedMealTime, setSelectedMealTime } = useLogsContext();
     const mealTimeItems = [
                     { label: "朝ごはん", value: "morning" },
                     { label: "昼ごはん", value: "noon" },
@@ -19,7 +15,7 @@ export const SelectField: FC<Props> = memo((props) => {
     const collection = createListCollection<SelectOption>({ items:mealTimeItems });
 
     return (
-        <Select.Root gap={0} w={{base: "170px", md: "280px"}} collection={collection} value={selectedMealTime ? [selectedMealTime] : []} onValueChange={(details) => setSelectedMealTime(details.value[0] || null)} >
+        <Select.Root gap={0} w={{base: "170px", md: "280px"}} collection={collection} value={selectedMealTime ? [selectedMealTime] : []} onValueChange={(details) => {setSelectedMealTime(details.value[0] || null)}} >
             <Select.HiddenSelect />
             <Select.Label />
             <Select.Control >

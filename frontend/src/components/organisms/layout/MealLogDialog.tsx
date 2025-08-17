@@ -5,16 +5,16 @@ import { MealLogCard } from "../mealLog/MealLogCard";
 import { FieldGroup } from "../mealLog/FieldGroup";
 import { NavButton } from "../../atoms/button/NavButton";
 import { useLogs } from "../../../hooks/useLogs";
+import { useError } from "../../../hooks/useError";
 
 
 type Props = {
     date: string;
-    editTrigger?: ReactNode;
     dailyLogTrigger?: ReactNode;
 }
 
 export const MealLogDialog: FC<Props> = memo((props) => {
-    const { date, editTrigger, dailyLogTrigger } = props;
+    const { date, dailyLogTrigger } = props;
     const [viewOpen, setViewOpen] = useState(false);
     const [editOpen, setEditOpen] = useState(false);
     const [mealTime, setMealTime] = useState<string | null>(null);
@@ -25,6 +25,7 @@ export const MealLogDialog: FC<Props> = memo((props) => {
         setTimeout(() => setEditOpen(true), 0);
     }, [])
     const { resetForm } = useLogs();
+    const { errors,} = useError();
     const backButton = useCallback(() => {
         resetForm();
         setEditOpen(false);
@@ -33,7 +34,7 @@ export const MealLogDialog: FC<Props> = memo((props) => {
     return (
         <>
             <Dialog.Root placement="center" size={{base:"sm" , md: "xl"}} scrollBehavior="inside" open={viewOpen} onOpenChange={(e) => setViewOpen(e.open) } lazyMount >
-                <Dialog.Trigger>
+                <Dialog.Trigger asChild>
                     { dailyLogTrigger }
                 </Dialog.Trigger>
             <Portal>
@@ -61,9 +62,6 @@ export const MealLogDialog: FC<Props> = memo((props) => {
         </Dialog.Root>
 
             <Dialog.Root placement="center" size={{ base: "sm", md: "xl" }} scrollBehavior="inside" open={editOpen} onOpenChange={(e) => setEditOpen(e.open)} lazyMount >
-                <Dialog.Trigger>
-                    {editTrigger}
-                </Dialog.Trigger>
             <Portal>
                 <Dialog.Backdrop />
                 <Dialog.Positioner>
@@ -76,7 +74,7 @@ export const MealLogDialog: FC<Props> = memo((props) => {
                         </Dialog.Header>
                             <Dialog.Body p={{base: 0, md: 6}}>
                                 <VStack bg="yellow.50" gap={{ base: 6, md: 16 }} p={{base: 2, md:6}}>
-                                <FieldGroup />
+                                    <FieldGroup error={errors.menus} />
                             </VStack>
                         </Dialog.Body>
                         <Dialog.Footer p={0} justifyContent="center">

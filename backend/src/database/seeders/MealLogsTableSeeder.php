@@ -18,47 +18,43 @@ class MealLogsTableSeeder extends Seeder
             [
                 'profile_id'=>1,
                 'date'=>Carbon::now(),
-                'time'=>'06:40',
                 'menu'=>[
-                    'にんじん'=> '5g',
-                    'ドライフード'=>'20g'
+                    ['name'=>'にんじん', 'amount'=>'5g'],
+                    ['name'=>'ドライフード', 'amount'=>'20g']
                 ],
-                'amount_percent'=>'80%',
+                'amount_percent'=>'8割',
                 'meal_time'=>'morning',
                 'memo'=>'最初に手であげると少しずつ食べ始めた'
             ],
             [
                 'profile_id'=>1,
                 'date'=>Carbon::now(),
-                'time'=>'19:40',
                 'menu'=>[
-                    'ささみ'=> '5g',
-                    'ドライフード'=>'20g'
+                    ['name'=>'ささみ', 'amount'=>'5g'],
+                    ['name'=>'ドライフード', 'amount'=>'20g']
                 ],
-                'amount_percent'=>'50%',
+                'amount_percent'=>'5割',
                 'meal_time'=>'evening',
                 'memo'=>'あまり脱線しなかった'
             ],
             [
                 'profile_id'=>1,
                 'date'=>Carbon::now()->addDay(),
-                'time'=>'06:40',
                 'menu'=>[
-                    'かぼちゃ'=> '5g',
-                    'ドライフード'=>'20g'
+                    ['name'=>'かぼちゃ', 'amount'=>'5g'],
+                    ['name'=>'ドライフード', 'amount'=>'20g']
                 ],
-                'amount_percent'=>'80%',
+                'amount_percent'=>'8割',
                 'meal_time'=>'morning',
                 'memo'=>'最初に手であげると少しずつ食べ始めた'
             ],
             [
                 'profile_id'=>1,
                 'date'=>Carbon::now()->addDay(),
-                'time'=>'14:40',
                 'menu'=>[
-                    '栗'=>'一粒'
+                    ['name'=>'栗', 'amount'=>'１粒'],
                 ],
-                'amount_percent'=>'100%',
+                'amount_percent'=>'10割',
                 'meal_time'=>'other',
                 'meal_time_note'=>'おやつ',
                 'memo'=>'大喜び'
@@ -66,12 +62,11 @@ class MealLogsTableSeeder extends Seeder
             [
                 'profile_id'=>1,
                 'date'=>Carbon::now()->addDay(),
-                'time'=>'19:40',
                 'menu'=>[
-                    '鶏むねミンチ'=> '5g',
-                    'ドライフード'=>'20g'
+                    ['name'=>'鳥胸みんち', 'amount'=>'5g'],
+                    ['name'=>'ドライフード', 'amount'=>'20g']
                 ],
-                'amount_percent'=>'70%',
+                'amount_percent'=>'7割',
                 'meal_time'=>'evening',
                 'memo'=>'ちょいちょい脱線した'
             ],

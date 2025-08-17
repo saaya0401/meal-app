@@ -9,10 +9,11 @@ use App\Models\MealLog;
 class DashboardController extends Controller
 {
     public function index(){
-        $profile = Profile::first();
-        $mealLog = MealLog::where('profile_id', $profile->id)
+        $profileData = Profile::select('id','name', 'image', 'gender', 'birthdate', 'weight_kg', 'is_multiple_dogs')->first();
+        $profile = $profileData->only(['id', 'name', 'image', 'gender', 'birthdate', 'weight_kg', 'is_multiple_dogs']);
+        $mealLog = MealLog::where('profile_id', $profile['id'])
                             ->orderBy('date', 'desc')
-                            ->orderBy('time', 'desc')
+                            ->orderBy('created_at', 'desc')
                             ->first();
         return response()->json([
             'profile'=>$profile,

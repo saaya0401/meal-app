@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\MealLog;
 
 class MealLogController extends Controller
 {
@@ -19,7 +20,8 @@ class MealLogController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $log = MealLog::create($request->all());
+        return response()->json($log,201);
     }
 
     /**

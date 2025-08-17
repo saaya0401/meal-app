@@ -1,12 +1,13 @@
 import { Box, Slider } from "@chakra-ui/react";
 import { FC, memo } from "react";
 import { useLogs } from "../../../hooks/useLogs";
+import { useLogsContext } from "../../../providers/LogsContext";
 
 
 export const SliderField: FC = memo(() => {
-    const { rate, setRate } = useLogs();
+    const { rate, setRate } = useLogsContext();
     return (
-        <Slider.Root w={{base: "230px", md: "500px"}} min={0} max={10} step={1} value={[rate]} onValueChange={(e) => setRate(e.value[0] ?? 0)} size="sm">
+        <Slider.Root w={{ base: "230px", md: "500px" }} min={0} max={10} step={1} value={[rate]} onValueChange={(e) => { setRate(e.value[0] ?? 0) }} size="sm">
             <Slider.Control >
                 <Slider.Track>
                     <Slider.Range />
