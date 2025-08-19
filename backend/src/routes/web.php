@@ -7,7 +7,6 @@ use App\Http\Controllers\DashboardController;
 
 Route::middleware('api')->group(function (){
     Route::apiResource('/api/profiles', ProfileController::class);
-    
 });
 
 

@@ -1,14 +1,14 @@
 import { Dialog, Flex, Image, Input, Portal,  VStack } from "@chakra-ui/react";
-import { FC, memo, ReactNode, useCallback, useEffect, useState } from "react";
+import { FC, memo, ReactNode, useCallback, useState } from "react";
 import { FieldRow } from "../../molecules/InputFields/FieldRow";
 import { SelectField } from "../../molecules/InputFields/SelectField";
 import { useDatePicker } from "../../../hooks/useDatePicker";
 import { FieldGroup } from "../mealLog/FieldGroup";
-import { useLogs } from "../../../hooks/useLogs";
 import { NavButton } from "../../atoms/button/NavButton";
 import axios from "axios";
 import { useError } from "../../../hooks/useError";
 import { useLogsContext } from "../../../providers/LogsContext";
+import { useMessage } from "../../../hooks/useMessage";
 
 type Props = {
     triggerDesktop?: ReactNode;
@@ -17,13 +17,14 @@ type Props = {
 
 export const AddLogDialog: FC<Props> = memo((props) => {
     const { triggerMobile, triggerDesktop } = props;
+    const [open, setOpen] = useState(false);
     const [submitting, setSubmitting] = useState(false);
     const { inputRef, showPicker } = useDatePicker();
     const { selectedMealTime,  mealTimeNote, setMealTimeNote, resetForm, rate, menus, memoText, date, setDate } = useLogsContext();
     const { errors, validateLogInput, } = useError();
+    const { showMessage } = useMessage();
 
     const handleSubmit = useCallback(async () => {
-
         if (!validateLogInput(date, selectedMealTime, menus)) {
             return;
         }
@@ -39,7 +40,6 @@ export const AddLogDialog: FC<Props> = memo((props) => {
             amount_percent: `${rate}割`,
             memo: memoText
         }
-        console.log(payload);
         try {
             setSubmitting(true);
             const axiosInstance = axios.create({
@@ -50,16 +50,17 @@ export const AddLogDialog: FC<Props> = memo((props) => {
             });
             await axiosInstance.post("http://localhost/api/meal-logs", payload, );
             resetForm();
-            console.log("送信成功");
+            setOpen(false);
+            showMessage({ title: "記録を追加しました", type: "success" });
         } catch (err) {
-            console.log("送信失敗");
+            showMessage({ title: "送信に失敗しました", type: "error" });
         } finally {
             setSubmitting(false);
         }
     }, [date, selectedMealTime, mealTimeNote, menus, rate, memoText]);
 
     return (
-        <Dialog.Root placement="center" size={{base:"sm" , md: "xl"}} >
+        <Dialog.Root placement="center" size={{base:"sm" , md: "xl"}} open={open} onOpenChange= {(e) => setOpen(e.open)}>
             {triggerMobile && <Dialog.Trigger asChild>{triggerMobile}</Dialog.Trigger>}
             {triggerDesktop && <Dialog.Trigger asChild>{ triggerDesktop }</Dialog.Trigger>}
             <Portal>

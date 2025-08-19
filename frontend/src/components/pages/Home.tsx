@@ -3,13 +3,12 @@ import { FC, memo, useEffect } from "react";
 import { PetProfile } from "../organisms/home/PetProfile";
 import { LatestMeal } from "../organisms/mealLog/LatestMeal";
 import { Advice } from "../organisms/home/Advice";
-import { useData } from "../../hooks/useHomeData";
+import { useHomeData } from "../../hooks/useHomeData";
 
 export const Home: FC = memo(() => {
-    const { getData, data } = useData();
+    const { getData, data } = useHomeData();
     useEffect(() => { getData() }, [])
     const petProfile = data?.profile
-    console.log(data);
     const latestMeal = data?.meal_log
     return (
         <>

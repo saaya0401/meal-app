@@ -1,7 +1,12 @@
 import { useCallback, useState } from "react";
 
 export const useLogs = (initial = [{ name: "", amount: "" }]) => {
-    const [date, setDate] = useState("");
+    const [date, setDate] = useState(() => {
+        const now = new Date();
+        const tzOffsetMs = now.getTimezoneOffset() * 60 * 1000;
+        const local = new Date(now.getTime() - tzOffsetMs);
+        return local.toISOString().slice(0, 10);
+    });
     const [menus, setMenus] = useState(initial);
     const [selectedMealTime, setSelectedMealTime] = useState<string | null>(null);
     const [mealTimeNote, setMealTimeNote] = useState<string>("");

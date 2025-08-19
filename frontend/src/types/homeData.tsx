@@ -1,3 +1,5 @@
+import { MenuItem } from "./form";
+
 export type Gender = 'male' | 'female';
 
 export type Profile = {
@@ -13,11 +15,6 @@ export type Profile = {
     companion_name: string | null;
     created_at: string | null;
     updated_at: string | null;
-}
-
-export type MenuItem = {
-    name: string;
-    amount: string;
 }
 
 export type MealTime = 'morning' | 'noon' | 'evening' | 'other';

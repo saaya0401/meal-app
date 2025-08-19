@@ -2,7 +2,7 @@ import { useCallback, useState } from "react"
 import axios from "axios";
 import { DashboardResponse } from "../types/homeData";
 
-export const useData = () => {
+export const useHomeData = () => {
     const [data, setData] = useState<DashboardResponse>();
     const getData = useCallback(() => {
         axios.get<DashboardResponse>("http://localhost/api/dashboard")

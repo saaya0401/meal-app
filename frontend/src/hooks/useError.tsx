@@ -22,8 +22,13 @@ export const useError = () => {
         if (!selectedMealTime) {
             newErrors.mealTime = "時間帯を選択してください";
         }
-        if (menus. length === 0 || menus.some((m) => !m.name.trim() || !m.amount.trim())) {
+        if (menus. length === 0 || menus.some((m) => !m.name.trim() || !m.amount)) {
             newErrors.menus = "メニューと量を入力してください";
+        } else if (menus.some((m) => {
+            const n = Number(m.amount)
+            return !Number.isFinite(n) || n < 0 || String(m.amount).trim() === "";
+        })) {
+            newErrors.menus = "量は半角数字で入力してください"
         }
 
         setErrors(newErrors);

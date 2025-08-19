@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\MealLog;
+use Carbon\Carbon;
 
 class MealLogController extends Controller
 {
@@ -12,7 +13,21 @@ class MealLogController extends Controller
      */
     public function index()
     {
-        //
+        Carbon:: setlocale('ja');
+        $rows = MealLog::query()->where('profile_id', 1)
+                            ->selectRaw("
+                                `date`,
+                                ROUND(AVG(CAST(REPLACE(amount_percent, '割', '') AS DECIMAL(4,1)))) AS avg_rate
+                            ")
+                            ->groupBy('date')
+                            ->orderBy('date', 'asc')
+                            ->get()
+                            ->map(fn ($r) => [
+                                'date'=> $r->date,
+                                'formattedDate' => Carbon::parse($r->date)->isoFormat('YYYY/MM/DD(ddd)'),
+                                'avg_percent' => (int) $r->avg_rate
+                            ]);
+        return response()->json($rows, 200);
     }
 
     /**

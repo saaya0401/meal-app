@@ -52,7 +52,7 @@ class MealLogsTableSeeder extends Seeder
                 'profile_id'=>1,
                 'date'=>Carbon::now()->addDay(),
                 'menu'=>[
-                    ['name'=>'栗', 'amount'=>'１粒'],
+                    ['name'=>'栗', 'amount'=>'20g'],
                 ],
                 'amount_percent'=>'10割',
                 'meal_time'=>'other',
