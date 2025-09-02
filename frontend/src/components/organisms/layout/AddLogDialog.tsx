@@ -4,21 +4,56 @@ import { FieldRow } from "../../molecules/InputFields/FieldRow";
 import { SelectField } from "../../molecules/InputFields/SelectField";
 import { useDatePicker } from "../../../hooks/useDatePicker";
 import { FieldGroup } from "../mealLog/FieldGroup";
-import { useLogs } from "../../../hooks/useLogs";
 import { NavButton } from "../../atoms/button/NavButton";
+import { useError } from "../../../hooks/useError";
+import { useLogsContext } from "../../../providers/LogsContext";
+import { useMessage } from "../../../hooks/useMessage";
+import { useAddMealLog } from "../../../hooks/useAddMealLog";
 
 type Props = {
     triggerDesktop?: ReactNode;
     triggerMobile?: ReactNode;
+    onSuccess?: () => void;
 }
 
 export const AddLogDialog: FC<Props> = memo((props) => {
-    const { triggerMobile, triggerDesktop } = props;
-
+    const { triggerMobile, triggerDesktop, onSuccess } = props;
+    const { createMealLog} = useAddMealLog();
+    const [open, setOpen] = useState(false);
     const { inputRef, showPicker } = useDatePicker();
-    const { selectedMealTime, setSelectedMealTime, resetForm } = useLogs();
+    const { selectedMealTime,  mealTimeNote, setMealTimeNote, resetForm, rate, menus, memoText, date, setDate } = useLogsContext();
+    const { errors, validateLogInput, } = useError();
+    const { showMessage } = useMessage();
+
+    const handleSubmit = useCallback(async () => {
+        if (!validateLogInput(date, selectedMealTime, menus)) {
+            return;
+        }
+        const payload = {
+            profile_id: 1,
+            date,
+            meal_time: selectedMealTime,
+            meal_time_note: selectedMealTime === "other" ? mealTimeNote : null,
+            menu: menus.map(m => ({
+                ...m,
+                amount: `${m.amount}g`
+            })),
+            amount_percent: `${rate}割`,
+            memo: memoText
+        }
+        const res = await createMealLog(payload);
+        if (res.ok) {
+            resetForm();
+            setOpen(false);
+            showMessage({ title: "記録を追加しました", type: "success" });
+            onSuccess?.();
+        } else {
+            showMessage({ title: "送信に失敗しました", type: "error" });
+        }
+    }, [date, selectedMealTime, mealTimeNote, menus, rate, memoText, createMealLog, onSuccess]);
+
     return (
-        <Dialog.Root placement="center" size={{base:"sm" , md: "xl"}} >
+        <Dialog.Root placement="center" size={{base:"sm" , md: "xl"}} open={open} onOpenChange= {(e) => setOpen(e.open)}>
             {triggerMobile && <Dialog.Trigger asChild>{triggerMobile}</Dialog.Trigger>}
             {triggerDesktop && <Dialog.Trigger asChild>{ triggerDesktop }</Dialog.Trigger>}
             <Portal>
@@ -27,16 +62,16 @@ export const AddLogDialog: FC<Props> = memo((props) => {
                     <Dialog.Content px={{ base: 4, md: 6}} pt={{ base: 4, md: 6}}>
                         <Dialog.Body p={{ base: 1, md: 5 }}>
                             <VStack gap={{base:6, md: 16}}>
-                                <FieldRow label="日付" isRequired={true} errorText="日付を選択してください" >
-                                    <Input ref={inputRef} w={{base: "170px", md: "280px"}}  type="date" fontSize={{base: "sm" , md: "xl"}} onClick={showPicker} cursor="pointer"/>
+                                <FieldRow label="日付" isRequired={true} errorText={errors.date} >
+                                    <Input ref={inputRef} value={date} w={{base: "170px", md: "280px"}}  type="date" onChange={(e)=> {setDate(e.target.value); }} fontSize={{base: "sm" , md: "xl"}} onClick={showPicker} cursor="pointer"/>
                                 </FieldRow>
-                                <FieldRow label="食事の時間帯" isRequired={true} errorText="時間帯を選択してください">
-                                    <SelectField selectedMealTime={selectedMealTime } setSelectedMealTime={setSelectedMealTime} />
+                                <FieldRow label="食事の時間帯" isRequired={true} errorText={ errors.mealTime }>
+                                    <SelectField />
                                     {selectedMealTime === "other" && (
-                                        <Input w={{base: "120px", md: "200px"}} fontSize={{base: "sm" , md: "lg"}} placeholder="詳細"/>
+                                        <Input w={{ base: "120px", md: "200px" }} fontSize={{ base: "sm", md: "lg" }} placeholder="詳細" value={ mealTimeNote ?? ""} onChange = {(e) => setMealTimeNote?.(e.target.value)} />
                                     )}
                                 </FieldRow>
-                                <FieldGroup />
+                                <FieldGroup  error={errors.menus} />
                             </VStack>
                         </Dialog.Body>
                         <Dialog.Footer p={0}>
@@ -46,7 +81,7 @@ export const AddLogDialog: FC<Props> = memo((props) => {
                                     <Dialog.ActionTrigger asChild>
                                         <NavButton px={{base:4, md: 10}} py={{ base: 4, md: 5}} fontSize={{base: "sm", md: "xl"}} onClick={resetForm} bg="gray.400">キャンセル</NavButton>
                                     </Dialog.ActionTrigger>
-                                    <NavButton bg="pink.500" px={{ base: 4, md: 10 }} py={{ base: 4, md: 5 }} fontSize={{ base: "sm", md: "xl" }}>記録する</NavButton>
+                                    <NavButton bg="pink.500" px={{ base: 4, md: 10 }} py={{ base: 4, md: 5 }} fontSize={{ base: "sm", md: "xl" }} onClick={handleSubmit}>記録する</NavButton>
                                 </Flex>
                             </Flex>
                         </Dialog.Footer>

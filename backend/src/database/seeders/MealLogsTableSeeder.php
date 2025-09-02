@@ -14,71 +14,38 @@ class MealLogsTableSeeder extends Seeder
      */
     public function run(): void
     {
-        $meal_logs=[
-            [
-                'profile_id'=>1,
-                'date'=>Carbon::now(),
-                'time'=>'06:40',
-                'menu'=>[
-                    'にんじん'=> '5g',
-                    'ドライフード'=>'20g'
-                ],
-                'amount_percent'=>'80%',
-                'meal_time'=>'morning',
-                'memo'=>'最初に手であげると少しずつ食べ始めた'
-            ],
-            [
-                'profile_id'=>1,
-                'date'=>Carbon::now(),
-                'time'=>'19:40',
-                'menu'=>[
-                    'ささみ'=> '5g',
-                    'ドライフード'=>'20g'
-                ],
-                'amount_percent'=>'50%',
-                'meal_time'=>'evening',
-                'memo'=>'あまり脱線しなかった'
-            ],
-            [
-                'profile_id'=>1,
-                'date'=>Carbon::now()->addDay(),
-                'time'=>'06:40',
-                'menu'=>[
-                    'かぼちゃ'=> '5g',
-                    'ドライフード'=>'20g'
-                ],
-                'amount_percent'=>'80%',
-                'meal_time'=>'morning',
-                'memo'=>'最初に手であげると少しずつ食べ始めた'
-            ],
-            [
-                'profile_id'=>1,
-                'date'=>Carbon::now()->addDay(),
-                'time'=>'14:40',
-                'menu'=>[
-                    '栗'=>'一粒'
-                ],
-                'amount_percent'=>'100%',
-                'meal_time'=>'other',
-                'meal_time_note'=>'おやつ',
-                'memo'=>'大喜び'
-            ],
-            [
-                'profile_id'=>1,
-                'date'=>Carbon::now()->addDay(),
-                'time'=>'19:40',
-                'menu'=>[
-                    '鶏むねミンチ'=> '5g',
-                    'ドライフード'=>'20g'
-                ],
-                'amount_percent'=>'70%',
-                'meal_time'=>'evening',
-                'memo'=>'ちょいちょい脱線した'
-            ],
-        ];
+        $profileId = 1;
+        $daysBack = 60;
 
-        foreach($meal_logs as $log){
-            MealLog::create($log);
+        $today = Carbon::today();
+
+        for($i = 0; $i < $daysBack; $i++){
+            $date = $today->copy()->subDays($i)->format('Y-m-d');
+
+            MealLog::create([
+                'profile_id' => $profileId,
+                'date' => $date,
+                'menu' => [
+                    ['name' => 'ドライフード', 'amount' => '20g'],
+                    ['name' => 'にんじん', 'amount' => '5g'],
+                    ['name' => 'ヤギミルク', 'amount' => '1g']
+                ],
+                'amount_percent' => rand(2, 10) . '割',
+                'meal_time' => 'morning',
+                'memo' => '手で最初の一粒をあげると食べ出した'
+            ]);
+            MealLog::create([
+                'profile_id' => $profileId,
+                'date' => $date,
+                'menu' => [
+                    ['name' => 'ドライフード', 'amount' => '20g'],
+                    ['name' => 'ささみ', 'amount' => '5g'],
+                    ['name' => 'ヤギミルク', 'amount' => '1g']
+                ],
+                'amount_percent' => rand(6, 10) . '割',
+                'meal_time' => 'evening',
+                'memo' => 'こはるのごはんと同じかチェックしてから自分のごはんを食べ始めた'
+            ]);
         }
     }
 }

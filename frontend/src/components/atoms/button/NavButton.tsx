@@ -11,11 +11,13 @@ type Props = {
     px?: ComponentProps<typeof Button>["px"];
     py?: ComponentProps<typeof Button>["py"];
     fontSize?: ComponentProps<typeof Button>["fontSize"];
+    color?: string;
+    display?: string;
 }
 
 export const NavButton: FC<Props> = memo((props) => {
-    const {onClick, children, fontSize, bg, w, px, py} = props;
+    const {onClick, display, children, fontSize, bg, w, px, py, color} = props;
     return (
-        <Button visual="navButton" {...(onClick ? { onClick } : {})}  bg={bg} {...(w ? { w } : {})} {...(px ? { px } : {})}  {...(py ? { py } : {})} {...(fontSize ? { fontSize } : {})}>{children}</Button>
+        <Button color={color} visual="navButton" {...(onClick ? { onClick } : {})}  bg={bg} {...(w ? { w } : {})} {...(px ? { px } : {})}  {...(py ? { py } : {})} {...(fontSize ? { fontSize } : {})}>{children}</Button>
         )
 });
