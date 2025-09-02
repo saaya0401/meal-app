@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\MealLog;
 use Carbon\Carbon;
+use Illuminate\Support\Arr;
 
 class MealLogController extends Controller
 {
@@ -42,24 +43,51 @@ class MealLogController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $date)
     {
-        //
+        if(!$date) {
+            return response()->json(['message' => 'date query is required'], 422);
+        }
+
+        $logs = MealLog::query()
+            ->where('profile_id', 1)
+            ->whereDate('date', $date)
+            ->orderByRaw("FIELD(meal_time, 'morning', 'noon', 'evening', 'other')")
+            ->orderBy('created_at')
+            ->get()
+            ->map(fn ($r) => [
+                'id' => $r->id,
+                'meal_time' => $r->meal_time,
+                'meal_time_note' => $r->meal_time_note,
+                'menu' => $r->menu,
+                'amount_percent' => $r->amount_percent,
+                'memo' => $r->memo,
+            ]);
+
+            return response()->json($logs, 200);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, MealLog $meal_log)
     {
-        //
+        $updatable = ['meal_time', 'meal_time_note', 'menu', 'amount_percent', 'memo'];
+        $data = Arr::only($request->all(), $updatable);
+        if(array_key_exists('meal_time', $data) && ($data['meal_time'] ?? null) !== 'other'){
+            $data['meal_time_note'] = null;
+        }
+        $meal_log->update($data);
+        return response()->json($meal_log->fresh(), 200);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(MealLog $meal_log)
     {
-        //
+        $meal_log->delete();
+        return response()->json(['message'=>'削除しました', 'id' => $meal_log->id], 200);
     }
+
 }

@@ -1,7 +1,6 @@
 import { createListCollection, Portal, Select } from "@chakra-ui/react";
 import { FC, memo } from "react";
 import { SelectOption } from "../../../types/form";
-import { useLogs } from "../../../hooks/useLogs";
 import { useLogsContext } from "../../../providers/LogsContext";
 
 export const SelectField: FC = memo(() => {

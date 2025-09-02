@@ -18,8 +18,7 @@ export const MonthFilter: FC<Props> = memo((props) => {
                 <Input ref={inputRef} value={value} onChange={(e) => onChange(e.target.value)} type="month" h={{base: 10, md: 14}} onClick={showPicker} cursor="pointer" fontSize="xl"/>
             </Field.Root>
             <Flex gap={{base: 2, md: 6}} align="center">
-                <NavButton bg="#8ac982" fontSize={{base: "sm", md: "lg"}} py={{base: "8px", md: "16px"}} px={{base: "8px", md: "20px"}}>絞り込み</NavButton>
-                <NavButton bg="gray.400" fontSize={{base: "sm", md: "lg"}} py={{base: "8px", md: "16px"}} px={{base: "8px", md: "20px"}} onClick={onReset}>リセット</NavButton>
+                <NavButton bg="gray.400" fontSize={{base: "sm", md: "lg"}} py={{base: "8px", md: "12px"}} px={{base: "8px", md: "20px"}} onClick={onReset}>表示月クリア</NavButton>
             </Flex>
         </Flex>
     )

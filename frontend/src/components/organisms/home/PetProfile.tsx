@@ -10,8 +10,8 @@ type Props = {
 export const PetProfile: FC<Props> = memo((props) => {
     const { profile } = props;
     return (
-        <Box minW={{ base: 350, md: 600 , lg: 950 }} maxW={{ base: 1000, lg: 1100 }} justifySelf="center" mx={{ base: 10, lg: 100 }} my={{ base: 8,  md: 50, lg: 100 }}>
-            <Grid templateColumns={{ base: "auto 1fr", lg: "auto 1fr auto" }} alignItems="center" gap={{ base: 1, md: 10, lg: 12 }} bg="white" px={{ base: 4, lg: 20 }} py={5} borderRadius="lg"  boxShadow="lg" >
+        <Box mx={{ base: 2, md: 200 }} my={{ base: 8,  md: 50, lg: 100 }}>
+            <Grid templateColumns={{ base: "auto 1fr", lg: "auto 1fr auto" }} alignItems="center" gap={{ base: 1, md: 10, lg: 12 }} bg="white" px={{ base: 4, lg: 20 }} py={6} borderRadius="lg"  boxShadow="lg" >
                 <Flex display="flex" alignItems="center" justifyContent="center" >
                     <Image bg="gray.200" borderRadius="full" boxSize={{ base: 24, lg: 32 }} src={profile?.image ? `http://localhost/storage/${profile.image}` : undefined} alt="プロフィール画像" objectFit="cover" />
                 </Flex>

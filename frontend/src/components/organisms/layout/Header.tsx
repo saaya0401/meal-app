@@ -5,11 +5,14 @@ import { useNavigate } from "react-router-dom";
 import { NavButton } from "../../atoms/button/NavButton";
 import { GoPencil } from "react-icons/go";
 import { AddLogDialog } from "./AddLogDialog";
+import { useAllLogs } from "../../../hooks/useAllLogs";
+import { useAllLogsContext } from "../../../providers/AllLogsContext";
 
 export const Header: FC = memo(() => {
     const navigate = useNavigate();
     const onClickHome = useCallback(() => navigate("/home"), [navigate]);
     const onClickAllLogs = useCallback(() => navigate("/home/all-logs"), [navigate]);
+    const { getAllLogs } = useAllLogsContext();
 
     return (
         <>
@@ -19,6 +22,7 @@ export const Header: FC = memo(() => {
                             <GoPencil  />
                         </IconButton>}
                         triggerDesktop={null}
+                        onSuccess={getAllLogs}
                     />
                 <Flex as="a" _hover={{cursor: "pointer"}} onClick={onClickHome}>
                     <Heading as="h1" fontSize={{ base: 25, md: 35 }} fontFamily="'Mochiy Pop P One', 'sans-serif'" >
@@ -30,6 +34,7 @@ export const Header: FC = memo(() => {
                         triggerDesktop={
                             <NavButton bg="purple.400">記録を追加</NavButton>
                         }
+                        onSuccess={getAllLogs}
                     />
                     <Box>
                         <NavButton onClick={onClickAllLogs} bg="orange.400">記録一覧</NavButton>

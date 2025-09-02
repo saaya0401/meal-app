@@ -3,7 +3,6 @@ import { FC, memo } from "react";
 import { FieldRow } from "../../molecules/InputFields/FieldRow";
 import { MenuListInputs } from "../../molecules/InputFields/MenuListInputs";
 import { SliderField } from "../../molecules/InputFields/SliderField";
-import { useLogs } from "../../../hooks/useLogs";
 import { useLogsContext } from "../../../providers/LogsContext";
 
 type Props = {

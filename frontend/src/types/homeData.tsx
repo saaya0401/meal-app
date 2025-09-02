@@ -31,6 +31,7 @@ export type MealLog = {
     memo: string | null;
     created_at: string;
     updated_at: string;
+    formattedDate: string;
 }
 
 export type DashboardResponse = {

@@ -12,7 +12,6 @@ class MealLog extends Model
     protected $fillable = [
         'profile_id',
         'date',
-        'time',
         'menu',
         'amount_percent',
         'meal_time',
@@ -24,11 +23,6 @@ class MealLog extends Model
         'menu'=>'array',
     ];
 
-    protected function date(): Attribute{
-        return Attribute::make(
-            get: fn ($value) => Carbon::parse($value)->format('Y/m/d')
-        );
-    }
 
     protected function mealTime(): Attribute{
         return Attribute::make(

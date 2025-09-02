@@ -5,20 +5,21 @@ import { SelectField } from "../../molecules/InputFields/SelectField";
 import { useDatePicker } from "../../../hooks/useDatePicker";
 import { FieldGroup } from "../mealLog/FieldGroup";
 import { NavButton } from "../../atoms/button/NavButton";
-import axios from "axios";
 import { useError } from "../../../hooks/useError";
 import { useLogsContext } from "../../../providers/LogsContext";
 import { useMessage } from "../../../hooks/useMessage";
+import { useAddMealLog } from "../../../hooks/useAddMealLog";
 
 type Props = {
     triggerDesktop?: ReactNode;
     triggerMobile?: ReactNode;
+    onSuccess?: () => void;
 }
 
 export const AddLogDialog: FC<Props> = memo((props) => {
-    const { triggerMobile, triggerDesktop } = props;
+    const { triggerMobile, triggerDesktop, onSuccess } = props;
+    const { createMealLog} = useAddMealLog();
     const [open, setOpen] = useState(false);
-    const [submitting, setSubmitting] = useState(false);
     const { inputRef, showPicker } = useDatePicker();
     const { selectedMealTime,  mealTimeNote, setMealTimeNote, resetForm, rate, menus, memoText, date, setDate } = useLogsContext();
     const { errors, validateLogInput, } = useError();
@@ -40,24 +41,16 @@ export const AddLogDialog: FC<Props> = memo((props) => {
             amount_percent: `${rate}割`,
             memo: memoText
         }
-        try {
-            setSubmitting(true);
-            const axiosInstance = axios.create({
-                baseURL: "http://localhost:8000",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-            });
-            await axiosInstance.post("http://localhost/api/meal-logs", payload, );
+        const res = await createMealLog(payload);
+        if (res.ok) {
             resetForm();
             setOpen(false);
             showMessage({ title: "記録を追加しました", type: "success" });
-        } catch (err) {
+            onSuccess?.();
+        } else {
             showMessage({ title: "送信に失敗しました", type: "error" });
-        } finally {
-            setSubmitting(false);
         }
-    }, [date, selectedMealTime, mealTimeNote, menus, rate, memoText]);
+    }, [date, selectedMealTime, mealTimeNote, menus, rate, memoText, createMealLog, onSuccess]);
 
     return (
         <Dialog.Root placement="center" size={{base:"sm" , md: "xl"}} open={open} onOpenChange= {(e) => setOpen(e.open)}>

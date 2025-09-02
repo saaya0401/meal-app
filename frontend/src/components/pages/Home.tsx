@@ -13,9 +13,9 @@ export const Home: FC = memo(() => {
     return (
         <>
             <PetProfile profile={petProfile} />
-            <Box  mx={{ base: 2, md: 50 }} my={{base:12, md: 59, lg: 100}}>
-                <Grid templateColumns={{ base: "1fr", lg: "1fr 1fr" }} >
-                    <LatestMeal latestMeal={latestMeal} />
+            <Box  mx={{ base: 2, md: 50 }} my={{base:10, md: 58, lg: 100}}>
+                <Grid templateColumns={{ base: "1fr", lg: "1fr 1fr" }} gapY={2}>
+                    <LatestMeal latestMeal={latestMeal} onUpdated={getData} />
                     <Advice />
                 </Grid>
             </Box>
