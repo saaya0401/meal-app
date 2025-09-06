@@ -72,6 +72,7 @@ export const MealLogDialog: FC<Props> = memo((props) => {
         }
         const res = await updateMealLog(editingId, payload);
         if (res.ok) {
+            resetForm();
             setEditOpen(false);
             setViewOpen(false);
             onUpdated?.();

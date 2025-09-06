@@ -17,7 +17,7 @@ export const useUpdateMealLog = () => {
     const { showMessage } = useMessage();
     const updateMealLog = useCallback(async (id: number, payload: UpdatePayload) => {
         try {
-            await axiosInstance.patch(`http://localhost/api/meal-logs/${id}`, payload);
+            await axiosInstance.patch(`/api/meal-logs/${id}`, payload);
             showMessage({ title: "記録を更新しました", type: "success" });
             return { ok: true as const };
         } catch (e) {

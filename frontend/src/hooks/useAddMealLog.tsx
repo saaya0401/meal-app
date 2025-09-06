@@ -6,7 +6,7 @@ export const useAddMealLog = () => {
     const createMealLog = useCallback(async (payload: any) => {
         setLoading(true);
         try {
-            await axiosInstance.post("http://localhost/api/meal-logs", payload,);
+            await axiosInstance.post("/api/meal-logs", payload,);
             return { ok: true as const };
         } catch (e) {
             return { ok: false as const, error: e };

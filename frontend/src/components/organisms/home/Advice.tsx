@@ -19,7 +19,7 @@ export const Advice: FC = memo(() => {
                         generateAdvice({ profileId: 1 });
                         if (res.ok) setOpen(true);
                     }} >
-                        {loading ? <PawLoading /> : "アドバイスを生成"}
+                        {loading ? <PawLoading text="考え中"/> : "アドバイスを生成"}
                     </NavButton>
                     {!disabledShow && (
                         <NavButton bg="gray.200" color="gray.600" onClick={() => setOpen(true)}>アドバイスを表示</NavButton>
@@ -46,7 +46,7 @@ export const Advice: FC = memo(() => {
                                 </Flex>
                             </Dialog.Header>
                             <Dialog.Body pb={6}>
-                                <Text lineHeight={1.5} whiteSpace="pre-wrap" fontSize={{base: "md", md: "lg"}}>
+                                <Text lineHeight={2.0} whiteSpace="pre-wrap" fontSize={{base: "md", md: "lg"}}>
                                     {advice?.content}
                                 </Text>
                             </Dialog.Body>
