@@ -2,6 +2,7 @@ import { useCallback, useState } from "react";
 import axios from "axios";
 import { MealTime } from "../types/homeData";
 import { MenuItem } from "../types/form";
+import { axiosInstance } from "../api/axios";
 
 export type DailyLogItem = {
     id: number;
@@ -20,7 +21,7 @@ export const useDailyLogs = () => {
         setLoading(true);
         setError(null);
         try {
-            const res = await axios.get<DailyLogItem[]>(`http://localhost/api/meal-logs/${date}`, {
+            const res = await axiosInstance.get<DailyLogItem[]>(`/api/meal-logs/${date}`, {
                 params: { date },
             });
             setLogs(res.data);

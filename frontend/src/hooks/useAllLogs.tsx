@@ -1,5 +1,5 @@
 import { useCallback, useState } from "react";
-import axios from "axios";
+import { axiosInstance } from "../api/axios";
 
 type Type = {
     date: string;
@@ -12,7 +12,7 @@ export const useAllLogs = () => {
     const [logs, setLogs] = useState<Type[]>([]);
     const getAllLogs = useCallback(() => {
         setLoading(true);
-        axios.get<Type[]>("http://localhost/api/meal-logs")
+        axiosInstance.get<Type[]>("/api/meal-logs")
             .then((res) => setLogs(res.data))
             .finally(() => setLoading(false));
     }, []);

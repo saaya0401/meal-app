@@ -6,7 +6,7 @@ export const useDeleteMealLog = () => {
     const { showMessage } = useMessage();
     const deleteMealLog = useCallback(async (id: number) => {
         try {
-            await axiosInstance.delete(`http://localhost/api/meal-logs/${id}`);
+            await axiosInstance.delete(`/api/meal-logs/${id}`);
             showMessage({ title: "記録を削除しました", type: "success" });
             return { ok: true as const };
         } catch (e) {

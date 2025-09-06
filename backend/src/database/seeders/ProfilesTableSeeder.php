@@ -15,6 +15,7 @@ class ProfilesTableSeeder extends Seeder
     {
         $profile=[
             'name'=>'陽和',
+            'user_id'=>1,
             'image'=>'images/hiyori.jpg',
             'gender'=>'female',
             'birthdate'=>'2024-05-11',

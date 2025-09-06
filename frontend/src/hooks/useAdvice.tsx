@@ -31,7 +31,7 @@ export const useAdvice = () => {
             setLoading(true);
             setError(null);
             try {
-                const res = await axiosInstance.post<Advice>("http://localhost/api/advices/generate", { profile_id: args?.profileId });
+                const res = await axiosInstance.post<Advice>("/api/advices/generate", { profile_id: args?.profileId });
                 save(res.data);
                 console.log(res.data);
                 return { ok: true as const };
