@@ -32,7 +32,7 @@ export const Header: FC = memo(() => {
                         onSuccess={getAllLogs}
                     />
                 <Flex as="a" _hover={{cursor: "pointer"}} onClick={onClickHome}>
-                    <Flex align="center" gap={4} fontSize={{ base: 25, md: 35 }} fontFamily="'Mochiy Pop P One', 'sans-serif'" >
+                    <Flex align="center" gap={{base: 2, md: 4}} fontSize={{ base: 22, md: 35 }} fontFamily="'Mochiy Pop P One', 'sans-serif'" >
                         <LuPawPrint />
                         ひよりのごはん日記
                         <LuPawPrint />

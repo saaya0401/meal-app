@@ -7,6 +7,7 @@ import { LogsProvider } from "../providers/LogsContext";
 import { AllLogsProvider } from "../providers/AllLogsContext";
 import { Login } from "../components/pages/Login";
 import { RequireAuth } from "../components/RequireAuth";
+import { Register } from "../components/pages/Register";
 
 export const Router: FC = memo(() => {
     return (
@@ -14,6 +15,7 @@ export const Router: FC = memo(() => {
             <LogsProvider>
                 <Routes>
                     <Route path="/login" element={<Login />}></Route>
+                    <Route path="/register" element={<Register />}></Route>
                     <Route element={<RequireAuth />}>
                         <Route path="/home">
                             {homeRoutes.map((route) => (

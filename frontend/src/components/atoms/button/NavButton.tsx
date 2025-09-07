@@ -12,13 +12,13 @@ type Props = {
     py?: ComponentProps<typeof Button>["py"];
     fontSize?: ComponentProps<typeof Button>["fontSize"];
     color?: string;
-    display?: string;
     isLoading?: boolean;
+    isDisabled?: boolean;
 }
 
 export const NavButton: FC<Props> = memo((props) => {
-    const {onClick, display, children, fontSize, bg, w, px, py, color, isLoading} = props;
+    const {onClick, children, fontSize, bg, w, px, py, color, isLoading, isDisabled} = props;
     return (
-        <Button color={color} visual="navButton" {...(onClick ? { onClick } : {})} {...(isLoading ? { isLoading } : {})}  bg={bg} {...(w ? { w } : {})} {...(px ? { px } : {})}  {...(py ? { py } : {})} {...(fontSize ? { fontSize } : {})}>{children}</Button>
+        <Button color={color} visual="navButton" {...(onClick ? { onClick } : {})} {...(isLoading ? { isLoading } : {})}  disabled={isDisabled} bg={bg} {...(w ? { w } : {})} {...(px ? { px } : {})}  {...(py ? { py } : {})} {...(fontSize ? { fontSize } : {})}>{children}</Button>
         )
 });

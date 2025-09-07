@@ -6,8 +6,9 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 
 Route::post('login', [AuthController::class, 'login']);
+Route::post('register', [AuthController::class, 'register']);
 Route::middleware('auth:sanctum')->group(function (){
-    Route::get('/dashboard', [DashboardController::class, 'index']);
+    Route::get('dashboard', [DashboardController::class, 'index']);
     Route::apiResource('meal-logs', MealLogController::class);
     Route::apiResource('profiles', ProfileController::class);
     Route::post('advices/generate', [AdviceController::class, 'generate']);

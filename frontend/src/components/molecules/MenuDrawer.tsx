@@ -1,7 +1,7 @@
 import { Drawer, Flex } from "@chakra-ui/react";
 import { FC, memo } from "react";
 import { MenuIconButton } from "../atoms/button/MenuIconButton";
-import { GoHome, GoNote, GoPencil } from "react-icons/go";
+import { GoHome, GoNote} from "react-icons/go";
 import { CiLogout } from "react-icons/ci";
 import { Button } from "../ui/Button";
 
