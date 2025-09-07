@@ -30,6 +30,30 @@ export const useAuth = () => {
         }
     }, []);
 
+    const register = useCallback(async (name: string, email: string, password: string) => {
+        setLoading(true);
+        setError(null);
+        try {
+            const res = await axiosInstance.post<{ token: string; user: User }>("/api/register", { name, email, password });
+            const t = res.data.token;
+            localStorage.setItem("auth_token", t);
+            setToken(t);
+            setUser(res.data.user);
+            return { ok: true as const };
+        } catch (e:any) {
+            if (e.response?.status === 422) {
+                if (e.response.data?.errors?.email?.[0]?.includes("taken")) {
+                    setError("このメールアドレスは既に登録されています");
+                }
+            } else {
+                setError("登録に失敗しました");
+            }
+            return { ok: false as const };
+        } finally {
+            setLoading(false);
+        }
+    }, []);
+
     const logout = useCallback(async () => {
         try {
             await axiosInstance.post("/api/logout");
@@ -42,5 +66,5 @@ export const useAuth = () => {
             setUser(null);
         }
     }, []);
-    return { login, logout, user, token, error, loading };
+    return { login, register, logout, user, token, error, loading };
 }

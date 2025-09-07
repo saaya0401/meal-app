@@ -1,11 +1,11 @@
-import { Box, Button, Flex, Heading, Input, Link, Separator, Text, VStack } from "@chakra-ui/react";
-import { FC, memo, useCallback, useState } from "react";
+import { Box, Flex, Heading, Input, Link, Separator, Text, VStack } from "@chakra-ui/react";
+import { FC, memo, useState } from "react";
 import { NavButton } from "../atoms/button/NavButton";
 import { useAuth } from "../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import { PawLoading } from "../atoms/PawLoading";
 import { PasswordInput } from "../ui/password-input";
-import { LuPawPrint } from "react-icons/lu";
+import { PiPawPrintFill } from "react-icons/pi";
 
 export const Login: FC = memo(() => {
     const [email, setEmail] = useState('');
@@ -24,9 +24,9 @@ export const Login: FC = memo(() => {
             <Box bg="white" w="lg" p={6} borderRadius="md" shadow="md" >
                 <Heading as="h1" size="2xl">
                     <Flex align="center" gap={2} justify="center">
-                        <LuPawPrint />
-                        ひよりのごはん日記
-                        <LuPawPrint />
+                        <PiPawPrintFill color="#fa6fe7"/>
+                        ログイン
+                        <PiPawPrintFill color="#fa6fe7"/>
                     </Flex>
                 </Heading>
                 <Separator borderColor="gray.300" w="100%" my={5} />
@@ -40,7 +40,7 @@ export const Login: FC = memo(() => {
                 </VStack>
                 <Flex justify="center" align="center">
                     <Text>初めての方は</Text>
-                    <Link href="http://localhost/api/register" color="blue" borderBottom="1px solid blue" lineHeight="1.1">こちら</Link>
+                    <Link href="/register" color="blue" borderBottom="1px solid blue" lineHeight="1.1">こちら</Link>
                 </Flex>
             </Box>
         </Flex>
