@@ -20,9 +20,8 @@ return new class extends Migration
             $table->date('birthdate');
             $table->decimal('weight_kg', 3,1);
             $table->string('breed');
-            $table->text('personality');
+            $table->text('personality')->nullable();
             $table->boolean('is_multiple_dogs');
-            $table->string('companion_name')->nullable();
             $table->timestamps();
         });
     }

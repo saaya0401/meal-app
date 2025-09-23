@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react"
 import { axiosInstance } from "../api/axios";
+import { useLoginUser } from "../providers/LoginUserProvider";
 
 export type Advice = {
     id?: number;
@@ -13,21 +14,30 @@ export const useAdvice = () => {
     const [advice, setAdvice] = useState<Advice | null>(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
+    const { loginUser } = useLoginUser();
+    const getStorageKey = () => loginUser ? `latest_advice_${loginUser.id}` : null;
 
     useEffect(() => {
+        localStorage.removeItem("latest_advice");
+        const key = getStorageKey();
+        if (!key) return;
         try {
-            const raw = localStorage.getItem(STORAGE_KEY);
+            const raw = localStorage.getItem(key);
             if (raw) setAdvice(JSON.parse(raw));
-        } catch { }
-    }, []);
+        } catch {
+            console.log("アドバイスの読み込み失敗")
+        }
+    }, [loginUser?.id]);
 
     const save = (a: Advice) => {
         setAdvice(a);
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(a));
+        const key = getStorageKey();
+        if (key) { localStorage.setItem(key, JSON.stringify(a)) };
     }
 
     const generateAdvice = useCallback(
-        async (args?: { profileId?: number }) => {
+        async (args?: { profileId?: number | null | undefined }) => {
+            console.log(loginUser);
             setLoading(true);
             setError(null);
             try {
@@ -41,12 +51,15 @@ export const useAdvice = () => {
             } finally {
                 setLoading(false);
             }
-        }, []);
+        }, [loginUser]);
 
     const clearAdvice = useCallback(() => {
         setAdvice(null);
-        localStorage.removeItem(STORAGE_KEY);
-    }, []);
+        const key = getStorageKey();
+        if (key) {
+            localStorage.removeItem(key);
+        }
+    }, [loginUser]);
 
     return { advice, loading, error, generateAdvice, clearAdvice };
 }

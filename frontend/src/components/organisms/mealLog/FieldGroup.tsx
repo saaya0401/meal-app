@@ -27,7 +27,7 @@ export const FieldGroup: FC<Props> = memo((props) => {
                     <SliderField />
                 </Flex>
             </Field.Root>
-            <FieldRow label="フリーコメント">
+            <FieldRow label="フリーコメント" isRequired={false}>
                 <Textarea bg="white" minH="80px" w={{ base: "220px", md: "500px" }} fontSize={{ base: "sm", md: "xl" }} lineHeight={1.5} placeholder={`例：最初の一粒だけ手であげると食べ始めた。\n脱線を何度かしていたなど。`} value={ memoText } onChange={(e) => {setMemoText(e.target.value)}} />
             </FieldRow>
         </>

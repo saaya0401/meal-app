@@ -12,10 +12,11 @@ class MealLogController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         Carbon:: setlocale('ja');
-        $rows = MealLog::query()->where('profile_id', 1)
+        $profileId = $request->query('profile_id');
+        $rows = MealLog::query()->where('profile_id', $profileId)
                             ->selectRaw("
                                 `date`,
                                 ROUND(AVG(CAST(REPLACE(amount_percent, '割', '') AS DECIMAL(4,1)))) AS avg_rate
@@ -49,8 +50,9 @@ class MealLogController extends Controller
             return response()->json(['message' => 'date query is required'], 422);
         }
 
+        $profileId = request()->query('profile_id');
         $logs = MealLog::query()
-            ->where('profile_id', 1)
+            ->where('profile_id', $profileId)
             ->whereDate('date', $date)
             ->orderByRaw("FIELD(meal_time, 'morning', 'noon', 'evening', 'other')")
             ->orderBy('created_at')

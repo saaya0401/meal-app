@@ -1,13 +1,14 @@
 import { useCallback, useState } from "react"
 import { axiosInstance } from "../api/axios";
+import { useLoginUser } from "../providers/LoginUserProvider";
 
-type User = {
+export type User = {
     id: number;
     name: string;
     email: string;
 }
 export const useAuth = () => {
-    const [user, setUser] = useState<User | null>(null);
+    const { setLoginUser } = useLoginUser();
     const [token, setToken] = useState<string | null>(localStorage.getItem("auth_token"));
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
@@ -20,7 +21,7 @@ export const useAuth = () => {
             const t = res.data.token;
             localStorage.setItem("auth_token", t);
             setToken(t);
-            setUser(res.data.user);
+            setLoginUser(res.data.user);
             return { ok: true as const };
         } catch (e) {
             setError("メールアドレスまたはパスワードが正しくありません");
@@ -38,7 +39,7 @@ export const useAuth = () => {
             const t = res.data.token;
             localStorage.setItem("auth_token", t);
             setToken(t);
-            setUser(res.data.user);
+            setLoginUser(res.data.user);
             return { ok: true as const };
         } catch (e:any) {
             if (e.response?.status === 422) {
@@ -63,8 +64,8 @@ export const useAuth = () => {
             localStorage.removeItem("auth_token");
             delete axiosInstance.defaults.headers.common.Authorization;
             setToken(null);
-            setUser(null);
+            setLoginUser(null);
         }
     }, []);
-    return { login, register, logout, user, token, error, loading };
+    return { login, register, logout, token, error, loading };
 }

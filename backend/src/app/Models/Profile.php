@@ -20,7 +20,6 @@ class Profile extends Model
         'breed',
         'personality',
         'is_multiple_dogs',
-        'companion_name'
     ];
 
     /**

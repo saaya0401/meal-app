@@ -23,7 +23,6 @@ class ProfilesTableSeeder extends Seeder
             'breed'=>'マルポメ',
             'personality'=>'繊細、怖がり',
             'is_multiple_dogs'=>true,
-            'companion_name'=>'心晴'
         ];
         Profile::create($profile);
     }
