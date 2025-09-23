@@ -1,4 +1,4 @@
-import { Field, Flex, Input } from "@chakra-ui/react";
+import { Field, Flex, Text } from "@chakra-ui/react";
 import { FC, memo, ReactNode } from "react";
 
 type Props = {
@@ -10,14 +10,17 @@ type Props = {
 }
 
 export const FieldRow: FC<Props> = memo((props) => {
-    const { isRequired, htmlFor, label, children, errorText} = props;
+    const { isRequired = true, htmlFor, label, children, errorText} = props;
     return (
         <Field.Root required={isRequired} invalid={!!errorText}>
-            <Flex align="center" gap={{base:4 , md: 10}}>
-                <Field.Label htmlFor={htmlFor} fontWeight="bold" minW={{base: "90px" , md: "150px"}} fontSize={{base: "sm" , md: "xl"}}>{ label }</Field.Label>
+            <Flex align="center" gap={{ base: 4, md: 10 }} w="100%">
+                <Flex align="baseline" justify="left" minW={{ base: "90px", md: "160px" }} gap={2} whiteSpace="nowrap">
+                    <Field.Label htmlFor={htmlFor} fontWeight="bold" fontSize={{ base: "sm", md: "xl" }}>{label}</Field.Label>
+                    {isRequired || (<Text fontSize="sm" color="gray">( 任意 )</Text>)}
+                </Flex>
                 {children}
             </Flex>
-            <Field.ErrorText color="red.600" fontSize={{base: "md", md: "xl"}} pt={3}>{ errorText }</Field.ErrorText>
+            <Field.ErrorText color="red.600" fontSize={{base: "md", md: "lg"}} pt={3}>{ errorText }</Field.ErrorText>
         </Field.Root>
     )
 })

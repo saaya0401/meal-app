@@ -3,7 +3,7 @@ import { MenuItem } from "./form";
 export type Gender = 'male' | 'female';
 
 export type Profile = {
-    id: number;
+    id: number | null;
     name: string;
     image: string | null;
     gender: Gender;

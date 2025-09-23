@@ -9,6 +9,7 @@ import { useError } from "../../../hooks/useError";
 import { useLogsContext } from "../../../providers/LogsContext";
 import { useMessage } from "../../../hooks/useMessage";
 import { useAddMealLog } from "../../../hooks/useAddMealLog";
+import { useProfile } from "../../../providers/ProfileContext";
 
 type Props = {
     triggerDesktop?: ReactNode;
@@ -18,7 +19,8 @@ type Props = {
 
 export const AddLogDialog: FC<Props> = memo((props) => {
     const { triggerMobile, triggerDesktop, onSuccess } = props;
-    const { createMealLog} = useAddMealLog();
+    const { createMealLog } = useAddMealLog();
+    const { profile } = useProfile();
     const [open, setOpen] = useState(false);
     const { inputRef, showPicker } = useDatePicker();
     const { selectedMealTime,  mealTimeNote, setMealTimeNote, resetForm, rate, menus, memoText, date, setDate } = useLogsContext();
@@ -26,11 +28,15 @@ export const AddLogDialog: FC<Props> = memo((props) => {
     const { showMessage } = useMessage();
 
     const handleSubmit = useCallback(async () => {
+        if (!profile?.id) {
+        showMessage({ title: "プロフィールが未設定です", type: "error" });
+        return;
+    }
         if (!validateLogInput(date, selectedMealTime, menus)) {
             return;
         }
         const payload = {
-            profile_id: 1,
+            profile_id: profile?.id,
             date,
             meal_time: selectedMealTime,
             meal_time_note: selectedMealTime === "other" ? mealTimeNote : null,

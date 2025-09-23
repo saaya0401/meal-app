@@ -8,12 +8,14 @@ import { AddLogDialog } from "./AddLogDialog";
 import { useAllLogsContext } from "../../../providers/AllLogsContext";
 import { useAuth } from "../../../hooks/useAuth";
 import { LuPawPrint } from "react-icons/lu";
+import { useProfile } from "../../../providers/ProfileContext";
 
 export const Header: FC = memo(() => {
     const navigate = useNavigate();
     const onClickHome = useCallback(() => navigate("/home"), [navigate]);
     const onClickAllLogs = useCallback(() => navigate("/home/all-logs"), [navigate]);
     const { getAllLogs } = useAllLogsContext();
+    const { profile } = useProfile();
 
     const { logout } = useAuth();
 
@@ -29,7 +31,7 @@ export const Header: FC = memo(() => {
                             <GoPencil  />
                         </IconButton>}
                         triggerDesktop={null}
-                        onSuccess={getAllLogs}
+                        onSuccess={()=>getAllLogs(profile?.id ?? null)}
                     />
                 <Flex as="a" _hover={{cursor: "pointer"}} onClick={onClickHome}>
                     <Flex align="center" gap={{base: 2, md: 4}} fontSize={{ base: 22, md: 35 }} fontFamily="'Mochiy Pop P One', 'sans-serif'" >
@@ -43,7 +45,7 @@ export const Header: FC = memo(() => {
                         triggerDesktop={
                             <NavButton bg="purple.400">記録を追加</NavButton>
                         }
-                        onSuccess={getAllLogs}
+                        onSuccess={()=>getAllLogs(profile?.id ?? null)}
                     />
                     <NavButton onClick={onClickAllLogs} bg="orange.400">記録一覧</NavButton>
                     <NavButton onClick={handleLogout} bg="gray.400">ログアウト</NavButton>

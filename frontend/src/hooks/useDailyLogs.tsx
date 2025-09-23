@@ -1,8 +1,8 @@
 import { useCallback, useState } from "react";
-import axios from "axios";
 import { MealTime } from "../types/homeData";
 import { MenuItem } from "../types/form";
 import { axiosInstance } from "../api/axios";
+import { useProfile } from "../providers/ProfileContext";
 
 export type DailyLogItem = {
     id: number;
@@ -17,11 +17,12 @@ export const useDailyLogs = () => {
     const [loading, setLoading] = useState(false);
     const [logs, setLogs] = useState<DailyLogItem[]>([]);
     const [error, setError] = useState<string | null>(null);
+    const { profile } = useProfile();
     const getDailyLogs = useCallback(async(date: string | null | undefined) => {
         setLoading(true);
         setError(null);
         try {
-            const res = await axiosInstance.get<DailyLogItem[]>(`/api/meal-logs/${date}`, {
+            const res = await axiosInstance.get<DailyLogItem[]>(`/api/meal-logs/${date}?profile_id=${profile?.id}`, {
                 params: { date },
             });
             setLogs(res.data);

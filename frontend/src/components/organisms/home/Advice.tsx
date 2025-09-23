@@ -4,7 +4,11 @@ import { useAdvice } from "../../../hooks/useAdvice";
 import { NavButton } from "../../atoms/button/NavButton";
 import { PawLoading } from "../../atoms/PawLoading";
 
-export const Advice: FC = memo(() => {
+type Props = {
+    profileId: number | null | undefined;
+}
+export const Advice: FC<Props> = memo((props) => {
+    const {profileId} = props;
     const { advice, loading, generateAdvice } = useAdvice();
     const [open, setOpen] = useState(false);
     const disabledShow = !advice || !advice.content;
@@ -16,7 +20,7 @@ export const Advice: FC = memo(() => {
                 <Box display="grid" gap={6} pt={6}>
                     <NavButton bg="teal.400" onClick={async() => {
                         const res = await
-                        generateAdvice({ profileId: 1 });
+                        generateAdvice({ profileId });
                         if (res.ok) setOpen(true);
                     }} >
                         {loading ? <PawLoading text="考え中"/> : "アドバイスを生成"}

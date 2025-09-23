@@ -5,15 +5,19 @@ import { Loading } from "../molecules/Loading";
 import { MealLogDialog } from "../organisms/layout/MealLogDialog";
 import { DailyMealCard } from "../organisms/mealLog/DailyMealCard";
 import { useAllLogsContext } from "../../providers/AllLogsContext";
+import { useProfile } from "../../providers/ProfileContext";
 
 
 export const AllLogs: FC = memo(() => {
     const { getAllLogs, loading, logs } = useAllLogsContext();
+    const { profile } = useProfile();
 
     const currentMonth = new Date().toISOString().slice(0, 7);
     const [month, setMonth] = useState(currentMonth);
     const handleReset = useCallback(() => { setMonth(currentMonth); }, []);
-    useEffect(() => getAllLogs(), []);
+    useEffect(() => {
+        getAllLogs(profile?.id ?? null)
+    }, [profile?.id]);
 
     const filteredLogs = logs.filter((log) => {
         return log.date.slice(0, 7) === month;
@@ -33,7 +37,7 @@ export const AllLogs: FC = memo(() => {
                                     dailyLogTrigger={
                                         <DailyMealCard percent={log.avg_percent * 10} date={log.formattedDate} />
                                     }
-                                    onUpdated={getAllLogs}
+                                    onUpdated={()=>getAllLogs(profile?.id ?? null)}
                                 />
                             </WrapItem>
                         ))}

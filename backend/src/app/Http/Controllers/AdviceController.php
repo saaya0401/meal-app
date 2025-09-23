@@ -10,22 +10,15 @@ use App\Services\AdviceGenerator;
 class AdviceController extends Controller
 {
     public function generate(Request $request){
-        \Log::info('advice.generate start', [
-    'profile_id' => $request->input('profile_id'),
-]);
-
-// プロフィール取得後
-
-// ログ取得後
-
         $request->validate([
             'profile_id'=>['required', 'integer'],
         ]);
-        $profileId=$request->input('profile_id');
-        $profile = Profile::find($profileId);
-        \Log::info('advice.generate profile', ['exists' => (bool)$profile]);
-        $logs = MealLog::where('profile_id', $profileId)->latest()->take(20)->get();
-\Log::info('advice.generate logs', ['count' => $logs->count()]);
+        $profile = Profile::where('id', $request->input('profile_id'))->where('user_id', $request->user()->id)->first();
+
+if (!$profile) {
+    return response()->json(['message' => 'プロフィールが見つかりませんでした'], 404);
+}
+        $logs = MealLog::where('profile_id', $profile->id)->latest()->take(20)->get();
         $generator = AdviceGenerator::makeFromConfig();
         $content = $generator->generate($profile, $logs);
 

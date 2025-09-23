@@ -16,7 +16,7 @@ export const Register: FC = memo(() => {
         if (!validateForm()) return;
         const res = await register(name.trim(), email.trim(), password);
         if (res.ok) {
-            navigate("/home");
+            navigate("/petProfile/register");
         } else {
             setFieldErrors((prev) => ({ ...prev, general: error ?? "登録に失敗しました" }));
         }
